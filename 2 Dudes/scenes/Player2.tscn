@@ -1,0 +1,94 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scripts/Player2.gd" type="Script" id=1]
+[ext_resource path="res://resources/player2/down2.tres" type="Texture" id=2]
+[ext_resource path="res://resources/player2/down1.tres" type="Texture" id=3]
+[ext_resource path="res://resources/player2/left2.tres" type="Texture" id=4]
+[ext_resource path="res://resources/player2/left3.tres" type="Texture" id=5]
+[ext_resource path="res://resources/player2/down3.tres" type="Texture" id=6]
+[ext_resource path="res://resources/player2/right2.tres" type="Texture" id=7]
+[ext_resource path="res://resources/player2/right1.tres" type="Texture" id=8]
+[ext_resource path="res://resources/player2/up3.tres" type="Texture" id=9]
+[ext_resource path="res://resources/player2/up1.tres" type="Texture" id=10]
+[ext_resource path="res://resources/player2/up2.tres" type="Texture" id=11]
+[ext_resource path="res://resources/player2/right3.tres" type="Texture" id=12]
+[ext_resource path="res://resources/player2/left1.tres" type="Texture" id=13]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "left",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "right",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "up",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "idleright",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idleleft",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "idleup",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "idledown",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "down",
+"speed": 8.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 22.4273, 5.26088 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "falling"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 1e-05, 1e-05 ) ]
+}
+
+[node name="Player2" type="KinematicBody2D" groups=[
+"Player",
+]]
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.358294, 58.7496 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/falling = SubResource( 3 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
